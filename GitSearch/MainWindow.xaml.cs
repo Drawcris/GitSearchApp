@@ -28,29 +28,39 @@ namespace GitSearch
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            string accountName = accountNameTextBox.Text;
-            string apiUrl = $"https://api.github.com/users/{accountName}/repos";
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                string responseString = await response.Content.ReadAsStringAsync();
+                string accountName = accountNameTextBox.Text;
+                string apiUrl = $"https://api.github.com/users/{accountName}/repos";
 
-                List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(responseString);
-
-                wynikListBox.Items.Clear();
-
-                foreach (var repo in repositories)
+                using (HttpClient client = new HttpClient())
                 {
-                    ListBoxItem item = new ListBoxItem();
-                    item.Content = $"Konto: {accountName} \nNazwa repozytorium: {repo.Name}\nOpis repozytorium: {repo.Description}\nLink do repozytorium: {repo.html_url}\n\n";
+                    client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    string responseString = await response.Content.ReadAsStringAsync();
 
-                    wynikListBox.Items.Add(item);
+                    List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(responseString);
+
+                    wynikListBox.Items.Clear();
+
+                    foreach (var repo in repositories)
+                    {
+                        ListBoxItem item = new ListBoxItem();
+                        item.Content = $"Konto: {accountName} \nNazwa repozytorium: {repo.Name}\nOpis repozytorium: {repo.Description}\nLink do repozytorium: {repo.html_url}\n\n";
+
+                        wynikListBox.Items.Add(item);
+                    }
                 }
             }
+            catch (HttpRequestException ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas pobierania danych z API GitHub. \nSprawdź połączenie z internetem bądź API.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Newtonsoft.Json.JsonException ex)
+            {
+                MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-
 
 
         public class Repository
@@ -61,6 +71,12 @@ namespace GitSearch
             public string Description { get; set; }
             public string html_url { get; set; }
         }
-    
+
+        private void Button_Close(object sender, RoutedEventArgs e)
+        {
+         
+                Application.Current.Shutdown();
+          
+        }
     }
 }

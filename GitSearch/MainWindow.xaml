@@ -17,7 +17,7 @@
             <Button Content="Szukaj" Click="Button_Click" Margin="5,0,0,0" />
         </StackPanel>
         <ListBox x:Name="wynikListBox" Margin="10,39,244,10" Grid.Row="1" Background="#FFAEBCF1" />
-        
-        
+        <Button Content="Wyjdź" Click="Button_Close" Margin="283,6,464,5"/>
+
     </Grid>
 </Window>
