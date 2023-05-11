@@ -15,9 +15,42 @@
             <TextBlock Text="Nazwa konta:" Margin="0,0,5,0" VerticalAlignment="Center" />
             <TextBox x:Name="accountNameTextBox" Width="150" VerticalAlignment="Center" />
             <Button Content="Szukaj" Click="Button_Click" Margin="5,0,0,0" />
+            <Button Content="Wyjdź" Click="Button_Close" Margin="7,0,0,0"/>
         </StackPanel>
-        <ListBox x:Name="wynikListBox" Margin="10,39,244,10" Grid.Row="1" Background="#FFAEBCF1" />
-        <Button Content="Wyjdź" Click="Button_Close" Margin="283,6,464,5"/>
+        
+        
+        
+        <Grid Margin="561,56,10,48" Grid.Row="1">
+            <rg:ResponsiveGrid>
+                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="3" />
+                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="6" />
+                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="3" />
+            </rg:ResponsiveGrid>
+            <Image x:Name="avatarImage" Source="{Binding ImageSource}" Margin="50,10,50,150" Stretch="Uniform" />
+        </Grid>
+        <Grid Margin="10,39,244,33" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <ListBox x:Name="wynikListBox" Margin="10,10,10,10" Background="#FFAEBCF1" RenderTransformOrigin="0.5,0.5" >
+                <ListBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ListBox.RenderTransform>
+            </ListBox>
+        </Grid>
+            
+        
+
 
     </Grid>
+
 </Window>

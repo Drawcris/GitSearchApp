@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace GitSearch
 {
@@ -41,6 +42,7 @@ namespace GitSearch
 
                     List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(responseString);
 
+                    
                     wynikListBox.Items.Clear();
 
                     foreach (var repo in repositories)
@@ -50,6 +52,31 @@ namespace GitSearch
 
                         wynikListBox.Items.Add(item);
                     }
+
+
+                    // Avatar
+
+                    string userApiUrl = $"https://api.github.com/users/{accountName}";
+                    HttpResponseMessage userResponse = await client.GetAsync(userApiUrl);
+                    string userResponseString = await userResponse.Content.ReadAsStringAsync();
+                    Repository user = JsonConvert.DeserializeObject<Repository>(userResponseString);
+
+                    string avatarUrl = user.avatar_url;
+                    byte[] imageData = await client.GetByteArrayAsync(avatarUrl);
+
+                    using (MemoryStream stream = new MemoryStream(imageData))
+                    {
+                        BitmapImage image = new BitmapImage();
+                        image.BeginInit();
+                        image.StreamSource = stream;
+                        image.CacheOption = BitmapCacheOption.OnLoad;
+                        image.EndInit();
+
+                        avatarImage.Source = image;
+                    }
+
+                    ///
+
                 }
             }
             catch (HttpRequestException ex)
@@ -60,9 +87,16 @@ namespace GitSearch
             {
                 MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+           
         }
 
+        private void Button_Close(object sender, RoutedEventArgs e)
+        {
 
+            Application.Current.Shutdown();
+
+        }
         public class Repository
         {
 
@@ -70,13 +104,9 @@ namespace GitSearch
             public string Name { get; set; }
             public string Description { get; set; }
             public string html_url { get; set; }
+            public string avatar_url { get; set; }
         }
 
-        private void Button_Close(object sender, RoutedEventArgs e)
-        {
-         
-                Application.Current.Shutdown();
-          
-        }
+       
     }
 }
