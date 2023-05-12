@@ -11,46 +11,21 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <StackPanel Orientation="Horizontal" Margin="5">
             <TextBlock Text="Nazwa konta:" Margin="0,0,5,0" VerticalAlignment="Center" />
             <TextBox x:Name="accountNameTextBox" Width="150" VerticalAlignment="Center" />
             <Button Content="Szukaj" Click="Button_Click" Margin="5,0,0,0" />
             <Button Content="Wyjdź" Click="Button_Close" Margin="7,0,0,0"/>
         </StackPanel>
-        
-        
-        
-        <Grid Margin="561,56,10,48" Grid.Row="1">
-            <rg:ResponsiveGrid>
-                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="3" />
-                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="6" />
-                <Border rg:ResponsiveGrid.XS="12" rg:ResponsiveGrid.SM="3" />
-            </rg:ResponsiveGrid>
-            <Image x:Name="avatarImage" Source="{Binding ImageSource}" Margin="50,10,50,150" Stretch="Uniform" />
-        </Grid>
-        <Grid Margin="10,39,244,33" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <ListBox x:Name="wynikListBox" Margin="10,10,10,10" Background="#FFAEBCF1" RenderTransformOrigin="0.5,0.5" >
-                <ListBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </ListBox.RenderTransform>
-            </ListBox>
-        </Grid>
-            
-        
 
-
+        <Grid Margin="10,10,10,48" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image x:Name="avatarImage" Source="{Binding ImageSource}" Margin="10,10,600,0" Stretch="Uniform" VerticalAlignment="Top" />
+            <ListBox x:Name="wynikListBox" Margin="10,10,10,10" Background="#FFAEBCF1" MinHeight="200" Grid.Row="1" />
+        </Grid>
     </Grid>
-
 </Window>

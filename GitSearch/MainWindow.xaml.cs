@@ -43,6 +43,7 @@ namespace GitSearch
                     List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(responseString);
 
                     
+
                     wynikListBox.Items.Clear();
 
                     foreach (var repo in repositories)
