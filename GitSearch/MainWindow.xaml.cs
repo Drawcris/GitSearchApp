@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Security.Cryptography.X509Certificates;
 using System.IO;
 
 namespace GitSearch
@@ -28,6 +18,36 @@ namespace GitSearch
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            Funckja(avatarImage, wynikListBox, accountNameTextBox);
+        }
+        private void Enter_Click(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Funckja(avatarImage, wynikListBox, accountNameTextBox);
+
+            }
+
+        }
+        private void Button_Close(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+
+        }
+        public class Repository
+        {
+
+
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string html_url { get; set; }
+            public string avatar_url { get; set; }
+        }
+
+        public async static void Funckja(Image avatarImage, ListBox wynikListBox, TextBox accountNameTextBox)
         {
             try
             {
@@ -42,7 +62,7 @@ namespace GitSearch
 
                     List<Repository> repositories = JsonConvert.DeserializeObject<List<Repository>>(responseString);
 
-                    
+
 
                     wynikListBox.Items.Clear();
 
@@ -82,32 +102,15 @@ namespace GitSearch
             }
             catch (HttpRequestException ex)
             {
+
                 MessageBox.Show($"Wystąpił błąd podczas pobierania danych z API GitHub. \nSprawdź połączenie z internetem bądź API.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
                 MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-           
         }
 
-        private void Button_Close(object sender, RoutedEventArgs e)
-        {
 
-            Application.Current.Shutdown();
-
-        }
-        public class Repository
-        {
-
-           
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public string html_url { get; set; }
-            public string avatar_url { get; set; }
-        }
-
-       
     }
 }
