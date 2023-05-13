@@ -109,10 +109,12 @@ namespace GitSearch
                         item.Content = $"Nazwa repozytorium:   {repo.Name}\nOpis repozytorium:   {repo.Description}\nLink do repozytorium:   {repo.html_url}\n\n";
                         item.Tag = repo;
                         wynikListBox.Items.Add(item);
-
-                        // Dodanie informacji do TextBlocka
-                        resultsTextBlock.Text += $"Login: {accountName}\nData utworzenia: {repo.created_at}\nID: {repo.id}\n\n";
                     }
+
+                    // Dodanie informacji do TextBlocka
+                    resultsTextBlock.Text = $"Login: {accountName}\nData utworzenia: {repositories[0].created_at}\nID: {repositories[0].id}\n\n";
+
+
 
 
 
