@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Diagnostics;
@@ -17,9 +16,9 @@ using GitSearch.Model;
 namespace GitSearch.ViewModel
 {
 
-    public class FunkcjaVM
+    public class Informacje
     {
-        public async static void Funckja(Image avatarImage, ListBox wynikListBox, TextBox accountNameTextBox, TextBlock resultsTextBlock)
+        public async static void ZnajdzInformacje(Image avatarImage, ListBox wynikListBox, TextBox accountNameTextBox, TextBlock resultsTextBlock)
         {
             try
             {
@@ -96,5 +95,28 @@ namespace GitSearch.ViewModel
                 MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+  
+        
+        }
     }
+    public static class Link
+    {
+        public static void Doubleclick(ListBox wynikListBox)
+    {
+            if (wynikListBox.SelectedItem != null)
+            {
+                ListBoxItem item = wynikListBox.SelectedItem as ListBoxItem;
+                string url = GetUrlFromListBoxItem(item);
+                Process.Start("cmd.exe", $"/C start {url}");
+            }
+        }
+
+        public static string GetUrlFromListBoxItem(ListBoxItem item)
+        {
+            string content = item.Content.ToString();
+            int startIndex = content.IndexOf("Link do repozytorium: ") + "Link do repozytorium: ".Length;
+            int endIndex = content.IndexOf("\n", startIndex);
+            return content.Substring(startIndex, endIndex - startIndex);
+        }
 }
