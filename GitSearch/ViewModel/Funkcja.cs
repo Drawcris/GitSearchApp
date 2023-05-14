@@ -47,10 +47,16 @@ namespace GitSearch.ViewModel
                         wynikListBox.Items.Add(item);
                     }
 
-                    // Dodanie informacji do TextBlocka
-                    resultsTextBlock.Text = $"Login: {accountName}\nData utworzenia: {repositories[0].created_at}\nID: {repositories[0].id}\n\n";
+                    try
+                    {
+                        // Dodanie informacji do TextBlocka
+                        resultsTextBlock.Text = $"Login: {accountName}\nData utworzenia: {repositories[0].created_at}\nID: {repositories[0].id}\n\n";
 
-
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Nie znaleziono informacji o koncie.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
 
 
