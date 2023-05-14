@@ -4,86 +4,21 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Diagnostics;
 
 
-namespace GitSearch
+
+using GitSearch.Model;
+
+
+namespace GitSearch.ViewModel
 {
-    public partial class MainWindow : Window
+
+    public class Informacje
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-
-        }
-
-        // Button Szukaj
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            Funckja(avatarImage, wynikListBox, accountNameTextBox, resultsTextBlock);
-
-        }
-        //
-
-        // button szukaj enterem
-        private void Enter_Click(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Funckja(avatarImage, wynikListBox, accountNameTextBox, resultsTextBlock);
-
-            }
-
-        }
-        //
-
-        // button wyjdz
-        private void Button_Close(object sender, RoutedEventArgs e)
-        {
-
-            Application.Current.Shutdown();
-
-        }
-        //
-
-        // Otwórz URL
-        private void wynikListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (wynikListBox.SelectedItem != null)
-            {
-                ListBoxItem item = wynikListBox.SelectedItem as ListBoxItem;
-                string url = GetUrlFromListBoxItem(item);
-                Process.Start("cmd.exe", $"/C start {url}");
-            }
-        }
-
-        private string GetUrlFromListBoxItem(ListBoxItem item)
-        {
-            string content = item.Content.ToString();
-            int startIndex = content.IndexOf("Link do repozytorium: ") + "Link do repozytorium: ".Length;
-            int endIndex = content.IndexOf("\n", startIndex);
-            return content.Substring(startIndex, endIndex - startIndex);
-        }
-        //
-
-        public class Repository
-        {
-
-
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public string html_url { get; set; }
-            public string avatar_url { get; set; }
-            public DateTime created_at { get; set; }
-            public string login { get; set; }
-            public int id { get; set; }
-        }
-
-        public async static void Funckja(Image avatarImage, ListBox wynikListBox, TextBox accountNameTextBox, TextBlock resultsTextBlock)
+        public async static void ZnajdzInformacje(Image avatarImage, ListBox wynikListBox, TextBox accountNameTextBox, TextBlock resultsTextBlock)
         {
             try
             {
@@ -111,10 +46,16 @@ namespace GitSearch
                         wynikListBox.Items.Add(item);
                     }
 
-                    // Dodanie informacji do TextBlocka
-                    resultsTextBlock.Text = $"Login: {accountName}\nData utworzenia: {repositories[0].created_at}\nID: {repositories[0].id}\n\n";
+                    try
+                    {
+                        // Dodanie informacji do TextBlocka
+                        resultsTextBlock.Text = $"Login: {accountName}\nData utworzenia: {repositories[0].created_at}\nID: {repositories[0].id}\n\n";
 
-
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Nie znaleziono informacji o koncie.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
 
 
@@ -155,9 +96,27 @@ namespace GitSearch
             }
         }
 
-
-
-
-
+  
+        
+        }
     }
+    public static class Link
+    {
+        public static void Doubleclick(ListBox wynikListBox)
+    {
+            if (wynikListBox.SelectedItem != null)
+            {
+                ListBoxItem item = wynikListBox.SelectedItem as ListBoxItem;
+                string url = GetUrlFromListBoxItem(item);
+                Process.Start("cmd.exe", $"/C start {url}");
+            }
+        }
+
+        public static string GetUrlFromListBoxItem(ListBoxItem item)
+        {
+            string content = item.Content.ToString();
+            int startIndex = content.IndexOf("Link do repozytorium: ") + "Link do repozytorium: ".Length;
+            int endIndex = content.IndexOf("\n", startIndex);
+            return content.Substring(startIndex, endIndex - startIndex);
+        }
 }
