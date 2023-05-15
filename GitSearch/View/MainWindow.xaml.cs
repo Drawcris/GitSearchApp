@@ -43,7 +43,7 @@ namespace GitSearch
         }
         //
 
-        // Otwórz URL
+        // Otwórz URL doubleclickiem
 
         private void wynikListBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
@@ -52,9 +52,5 @@ namespace GitSearch
 
         }
         //
-
-
-
-
     }
 }

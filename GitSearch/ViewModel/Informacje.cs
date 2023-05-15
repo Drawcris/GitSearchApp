@@ -6,10 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.IO;
-using System.Diagnostics;
-
-
-
 using GitSearch.Model;
 
 
@@ -86,37 +82,16 @@ namespace GitSearch.ViewModel
                 }
             }
             catch (HttpRequestException ex)
-            {
+                {
 
-                MessageBox.Show($"Wystąpił błąd podczas pobierania danych z API GitHub. \nSprawdź połączenie z internetem bądź API.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                    MessageBox.Show($"Wystąpił błąd podczas pobierania danych z API GitHub. \nSprawdź połączenie z internetem bądź API.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             catch (Newtonsoft.Json.JsonException ex)
-            {
-                MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-  
-        
+                {
+                    MessageBox.Show($"Zła nazwa konta!", "Hamuj się!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
         }
     }
-    public static class Link
-    {
-        public static void Doubleclick(ListBox wynikListBox)
-    {
-            if (wynikListBox.SelectedItem != null)
-            {
-                ListBoxItem item = wynikListBox.SelectedItem as ListBoxItem;
-                string url = GetUrlFromListBoxItem(item);
-                Process.Start("cmd.exe", $"/C start {url}");
-            }
-        }
 
-        public static string GetUrlFromListBoxItem(ListBoxItem item)
-        {
-            string content = item.Content.ToString();
-            int startIndex = content.IndexOf("Link do repozytorium: ") + "Link do repozytorium: ".Length;
-            int endIndex = content.IndexOf("\n", startIndex);
-            return content.Substring(startIndex, endIndex - startIndex);
-        }
 }
+   
