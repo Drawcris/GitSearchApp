@@ -9,7 +9,7 @@ namespace GitSearch.ViewModel
         {
             if (wynikListBox.SelectedItem != null)
             {
-                ListBoxItem item = wynikListBox.SelectedItem as ListBoxItem;
+                ListBoxItem? item = wynikListBox.SelectedItem as ListBoxItem;
                 string url = GetUrlFromListBoxItem(item);
                 Process.Start("cmd.exe", $"/C start {url}");
             }

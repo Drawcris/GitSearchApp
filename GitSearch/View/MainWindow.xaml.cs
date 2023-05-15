@@ -14,7 +14,7 @@ namespace GitSearch
         }
 
         // Button Szukaj
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Informacje.ZnajdzInformacje(avatarImage, wynikListBox, accountNameTextBox, resultsTextBlock);
            
