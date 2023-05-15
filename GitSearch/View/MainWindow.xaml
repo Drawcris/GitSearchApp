@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="5">
-            <TextBlock Text="Nazwa konta:" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White" />
+            <TextBlock Text="Podaj nazwe konta GitHub:" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White" />
             <TextBox x:Name="accountNameTextBox" Width="150" VerticalAlignment="Center"  KeyDown="Enter_Click" Background="#3E454D" BorderBrush="#3E454D" Foreground="White" />
             <Button Content="Szukaj" Click="Button_Click" Margin="5,0,0,0" Background="#28A745" Foreground="White" />
             <Button Content="Wyjdź" Click="Button_Close" Margin="7,0,0,0" Background="#6C757D" Foreground="White" />
